@@ -273,14 +273,11 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore
     , isFullscreen   		    --> doFullFloat
 --  , title =? "Buddy List"         --> doF(W.shift "9")
-    , title =? "Find"         	    --> doFloat
-    , title =? "Save As"            --> doFloat
-    , title =? "Save As…"         --> doFloat
-    , title =? "Find"         	    --> doFloat
 --  , className =? "Pidgin"         --> doF(W.focusDown)
 --  , className =? "Pidgin" <&&> title =? "buddy_list"         --> doF(W.shift "9")
 
 --  , className =? "Pidgin"         --> doF(W.swapDown)
+  , className =? "Gtkdialog"      --> doFloat
     ]
  
 ------------------------------------------------------------------------
@@ -336,7 +333,7 @@ myStartupHook = do spawn "~/.xmonad/startup.sh"
 
 
 --main = xmonad defaults
-main = xmonad =<< dzen defaultConfig
+main = xmonad =<< dzen defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -360,7 +357,8 @@ defaults = defaultConfig {
  
       -- hooks, layouts
         layoutHook 	   = smartBorders (myLayout),
-        manageHook 	   = myManageHook <+> insertPosition Below Newer,
+     -- manageHook 	   = myManageHook <+> insertPosition Below Newer,
+manageHook = manageHook defaultConfig <+> myManageHook <+> insertPosition Below Newer,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
