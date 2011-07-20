@@ -358,7 +358,7 @@ defaults = defaultConfig {
       -- hooks, layouts
         layoutHook 	   = smartBorders (myLayout),
      -- manageHook 	   = myManageHook <+> insertPosition Below Newer,
-manageHook = manageHook defaultConfig <+> myManageHook <+> insertPosition Below Newer,
+	manageHook = manageHook defaultConfig <+> myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
