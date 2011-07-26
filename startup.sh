@@ -1,5 +1,11 @@
+# set the background
+feh --bg-scale ~/pictures/tubbies.jpg &
+
 # disable caps lock
-setxkbmap -option caps:none
+setxkbmap -option caps:none &
+
+# set the default mouse cursor
+xsetroot -cursor_name left_ptr &
 
 # start the network manager applet
 nm-applet &
@@ -8,11 +14,13 @@ nm-applet &
 # gnome-do &
 
 # start power manager
-gnome-power-manager &
+# gnome-power-manager &
+
+# start the gnome-settings-daemon
+gnome-settings-daemon &
 
 # start the trayer
-# trayer --edge top --align right --widthtype pixel --width 60 --heighttype pixel --height 18 &
-# trayer --edge top --align right --widthtype request --heighttype request &
+# ./start_trayer.sh &
 lxpanel &
 
-feh --bg-scale ~/pictures/tubbies.jpg &
+

@@ -24,6 +24,10 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
+import XMonad.Util.Run
+
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.SetWMName
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -39,7 +43,7 @@ myFocusFollowsMouse = True
  
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 6
+myBorderWidth   = 5
  
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -80,7 +84,7 @@ myModMask       = mod1Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = [" www ", " chat ", " code ", " music ", " movies", " games ", " misc ", " misc2 ", " misc3 "]
  
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -111,7 +115,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     
  
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu -nb black -nf white -sf white -sb magenta -l 30` && eval \"exec $exe\"")
  
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
@@ -271,14 +275,17 @@ myManageHook = composeAll
     , className =? "Do"             --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
+--    , resource  =? "gnome-terminal" --> insertPosition Below Newer
     , isFullscreen   		    --> doFullFloat
 --  , title =? "Buddy List"         --> doF(W.shift "9")
---  , className =? "Pidgin"         --> doF(W.focusDown)
+    , className =? "Pidgin"         --> doF(W.shift "chat")
+    , className =? "Minecraft Launcher" --> doF(W.shift "chat")
+
 --  , className =? "Pidgin" <&&> title =? "buddy_list"         --> doF(W.shift "9")
 
 --  , className =? "Pidgin"         --> doF(W.swapDown)
-  , className =? "Gtkdialog"      --> doFloat
-    ]
+-- , className =? "Gtkdialog"      --> doFloat
+    ] 
  
 ------------------------------------------------------------------------
 -- Event handling
@@ -333,7 +340,27 @@ myStartupHook = do spawn "~/.xmonad/startup.sh"
 
 
 --main = xmonad defaults
-main = xmonad =<< dzen defaults
+--main = xmonad =<< dzen defaults
+--main = xmonad =<< xmobar defaults
+-- make sure to edit paths to xmobar and .xmobarrc to match your system.
+    -- If xmobar is in your $PATH, and its config is in ~/.xmobarrc you don't
+    -- need the xmobar path or config file, use: xmproc <- spawnPipe "xmobar"
+ 
+main = do
+    --xmproc <- spawnPipe "/path/to/xmobarbinary /home/jgoerzen/.xmobarrc"
+    xmproc <- spawnPipe "xmobar ~/.xmonad/.xmobarrc"
+    xmonad $ defaults
+        { manageHook = manageDocks <+> manageHook defaults
+        , layoutHook = avoidStruts  $  layoutHook defaults
+-- , startupHook = setWMName "LG3D"
+        , logHook = dynamicLogWithPP xmobarPP
+                        { ppOutput = hPutStrLn xmproc
+                        , ppTitle = xmobarColor "magenta" "" . shorten 150
+			, ppHiddenNoWindows = xmobarColor "white" ""
+			, ppUrgent = xmobarColor "blue" "" . wrap "[" "]"
+			, ppCurrent = xmobarColor "magenta" ""
+                        }
+        } 
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -358,7 +385,7 @@ defaults = defaultConfig {
       -- hooks, layouts
         layoutHook 	   = smartBorders (myLayout),
      -- manageHook 	   = myManageHook <+> insertPosition Below Newer,
-	manageHook = manageHook defaultConfig <+> myManageHook,
+	manageHook 	   = manageHook defaultConfig <+> myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
