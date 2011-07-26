@@ -279,7 +279,6 @@ myManageHook = composeAll
     , isFullscreen   		    --> doFullFloat
 --  , title =? "Buddy List"         --> doF(W.shift "9")
     , className =? "Pidgin"         --> doF(W.shift "chat")
-    , className =? "Minecraft Launcher" --> doF(W.shift "chat")
 
 --  , className =? "Pidgin" <&&> title =? "buddy_list"         --> doF(W.shift "9")
 
