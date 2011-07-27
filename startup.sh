@@ -4,20 +4,28 @@ feh --bg-scale ~/pictures/tubbies.jpg &
 # disable caps lock
 setxkbmap -option caps:none &
 
+
+
+
+
 # set the default mouse cursor
-xsetroot -cursor_name left_ptr &
+# xsetroot -cursor_name left_ptr &
 
-# start the network manager applet
-nm-applet &
-
-# start gnome-do
-# gnome-do &
+# start the gnome-settings-daemon
+# gnome-settings-daemon &
 
 # start power manager
 # gnome-power-manager &
 
-# start the gnome-settings-daemon
-gnome-settings-daemon &
+# start gnome-do
+# gnome-do &
+
+
+
+
+
+# start the network manager applet
+nm-applet &
 
 # start the trayer
 # ./start_trayer.sh &

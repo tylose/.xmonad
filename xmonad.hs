@@ -84,7 +84,8 @@ myModMask       = mod1Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = [" www ", " chat ", " code ", " music ", " movies", " games ", " misc ", " misc2 ", " misc3 "]
+myWorkspaces :: [WorkspaceId]
+myWorkspaces = ["www", "chat", "code", "music", "movies", "games", "misc", "misc2", "misc3"]
  
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -219,7 +220,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
  
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
+    -- you may also bind events to txmobar he mouse scroll wheel (button4 and button5)
     ]
  
 ------------------------------------------------------------------------
@@ -277,7 +278,7 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore
 --    , resource  =? "gnome-terminal" --> insertPosition Below Newer
     , isFullscreen   		    --> doFullFloat
---  , title =? "Buddy List"         --> doF(W.shift "9")
+    , title =? "Buddy List"         --> doF(W.shift "chat")
     , className =? "Pidgin"         --> doF(W.shift "chat")
 
 --  , className =? "Pidgin" <&&> title =? "buddy_list"         --> doF(W.shift "9")
@@ -351,13 +352,17 @@ main = do
     xmonad $ defaults
         { manageHook = manageDocks <+> manageHook defaults
         , layoutHook = avoidStruts  $  layoutHook defaults
--- , startupHook = setWMName "LG3D"
+--	, startupHook = setWMName "LG3D" --fix sun jdk problems
+--	, handleEventHook    = fullscreenEventHook --fix chrome fullscreen problem
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "magenta" "" . shorten 150
-			, ppHiddenNoWindows = xmobarColor "white" ""
+                        , ppTitle = xmobarColor "magenta" "" . shorten 150 
+			, ppHiddenNoWindows = xmobarColor "white" "" . wrap "  " "  "
+			, ppHidden = xmobarColor "white" "" . wrap "  " "  "
+			, ppCurrent = xmobarColor "magenta" "" . wrap "  " "  "
 			, ppUrgent = xmobarColor "blue" "" . wrap "[" "]"
-			, ppCurrent = xmobarColor "magenta" ""
+			, ppSep = "   :::   "
+--			, ppWsSep = "  "
                         }
         } 
 
