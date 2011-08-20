@@ -1,12 +1,12 @@
 # set the background
-feh --bg-scale ~/pictures/tubbies.jpg &
+feh --bg-scale ~/.xmonad/background.jpg &
 
 # disable caps lock
 setxkbmap -option caps:none &
 
-
-
-
+# start the trayer
+# ./start_trayer.sh &
+lxpanel &
 
 # set the default mouse cursor
 # xsetroot -cursor_name left_ptr &
@@ -20,15 +20,9 @@ setxkbmap -option caps:none &
 # start gnome-do
 # gnome-do &
 
-
-
-
-
 # start the network manager applet
-nm-applet &
+# nm-applet &
 
-# start the trayer
-# ./start_trayer.sh &
-lxpanel &
+
 
 

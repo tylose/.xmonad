@@ -85,7 +85,7 @@ myModMask       = mod1Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["www", "chat", "code", "music", "movies", "games", "misc", "misc2", "misc3"]
+myWorkspaces = ["www", "chat", "code", "movies", "music", "games", "misc1", "misc2", "misc3"]
  
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -150,10 +150,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Return), windows W.swapMaster)
  
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapDown  )
  
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapUp    )
  
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
@@ -280,6 +280,8 @@ myManageHook = composeAll
     , isFullscreen   		    --> doFullFloat
     , title =? "Buddy List"         --> doF(W.shift "chat")
     , className =? "Pidgin"         --> doF(W.shift "chat")
+    , className =? "Eclipse"         --> doF(W.shift "code")
+--    , className =? "Google-chrome" --> doF(W.shift "www")
 
 --  , className =? "Pidgin" <&&> title =? "buddy_list"         --> doF(W.shift "9")
 
