@@ -1,12 +1,12 @@
 # set the background
-feh --bg-scale ~/.xmonad/background.jpg &
+feh --bg-scale ~/.xmonad/wallpapers/background.jpg &
 
 # disable caps lock
 setxkbmap -option caps:none &
 
 # start the trayer
-# ./start_trayer.sh &
-lxpanel &
+./start_trayer.sh &
+# lxpanel &
 
 # set the default mouse cursor
 # xsetroot -cursor_name left_ptr &

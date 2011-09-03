@@ -116,7 +116,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     
  
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu -nb black -nf white -sf white -sb magenta -l 30` && eval \"exec $exe\"")
+    , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu -nb black -nf white -sf white -sb magenta -l 15` && eval \"exec $exe\"")
  
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
@@ -138,10 +138,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Tab   ), windows W.focusDown)
  
     -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
+    , ((modm,               xK_k     ), windows W.focusDown)
  
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_j     ), windows W.focusUp  )
  
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -358,7 +358,7 @@ main = do
 --	, handleEventHook    = fullscreenEventHook --fix chrome fullscreen problem
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "magenta" "" . shorten 150 
+                        , ppTitle = xmobarColor "magenta" "" . shorten 90 
 			, ppHiddenNoWindows = xmobarColor "white" "" . wrap "  " "  "
 			, ppHidden = xmobarColor "white" "" . wrap "  " "  "
 			, ppCurrent = xmobarColor "magenta" "" . wrap "  " "  "
